@@ -5,9 +5,13 @@
 
 
 
+
+
 ## 简介
 
 这是一个以排班推送为主要功能的管理saas应用，支持公告推送，排班推送，权限管理等。本应用意在探索云原生应用为软件开发带来的全新开发形式。同时对于微服务，devops等也有实践。
+
+
 
 
 
@@ -95,6 +99,8 @@
 
 
 
+
+
 ## 技术清单
 
 
@@ -140,6 +146,8 @@
 - #### Jenkins
 
 - #### Sonar Qube
+
+
 
 
 
@@ -200,6 +208,8 @@ rancher已经将创建Kubernetes做的非常简单，只需要点击页面上的
 
 
 
+
+
 ## 配置文件
 
 因为采用docker容器的方式，所以需要提前构建好docker镜像并上传到镜像仓库。
@@ -210,6 +220,8 @@ rancher已经将创建Kubernetes做的非常简单，只需要点击页面上的
 
 > ##### 该服务由java编写，采用SpringBoot框架。account服务主要负责应用中账户，角色权限相关服务。对应代码为模块 `account-api` 和 `account-svc`。
 
+
+
 **数据库**
 
 - **MySql**
@@ -219,6 +231,8 @@ rancher已经将创建Kubernetes做的非常简单，只需要点击页面上的
 - **MongoDB**
 
   创建ben文档
+
+
 
 **分布式事务Seata**
 
@@ -234,21 +248,27 @@ service {
 }
 ```
 
+
+
 **分布式锁**
 
 修改`account-svc/src/main/resources/redisson-对应环境-config.yml`。需要注意的是，这里提供了两个环境的配置文件，如果你使用其中一个需要修改对应的环境的配置文件即可。
 
 ```yaml
 singleServerConfig:
-	#你的redis服务地址
+	# 你的redis服务地址
   address: "redis://redis:6379"
-  #对应的密码
+  # 对应的密码
   password: xxxx
 ```
+
+
 
 **Oss存储**
 
 本项目中oss主要用于头像存储功能，采用的是阿里云oss，如果无特殊需求，可以不用开启修改。
+
+
 
 **后续**
 
@@ -256,13 +276,21 @@ singleServerConfig:
 
 
 
+
+<hr>
+
+
 ### Company服务
 
 > ##### 该服务由java编写，采用SpringBoot框架。company服务主要负责公司，团队，项目，消息相关服务。对应代码为模块 `company-api` 和 `company-svc`。
 
+
+
 **数据库**
 
 创建ben_company数据库运行数据库脚本，位于`db/company/ben_company.sql`。
+
+
 
 **分布式事务Seata**
 
@@ -278,6 +306,8 @@ service {
 }
 ```
 
+
+
 **分布式锁**
 
 修改`company-svc/src/main/resources/redisson-对应环境-config.yml`。需要注意的是，这里提供了两个环境的配置文件，如果你使用其中一个需要修改对应的环境的配置文件即可。
@@ -290,9 +320,16 @@ singleServerConfig:
   password: xxxx
 ```
 
+
+
 **后续**
 
 只需要通过maven构建SpringBoot应用，并通过`company-svc/Dockerfile` 构建docker镜像即可。
+
+
+
+
+<hr>
 
 
 
@@ -300,9 +337,16 @@ singleServerConfig:
 
 > ##### 该服务由java编写，采用SpringBoot框架。bot服务主要负责消息推送相关服务，与消息中间件对接。对应代码为模块 `bot-api` 和 `bot-svc`。
 
+
+
 **后续**
 
 只需要通过maven构建SpringBoot应用，并通过`bot-svc/Dockerfile` 构建docker镜像即可。
+
+
+
+
+<hr>
 
 
 
@@ -310,13 +354,28 @@ singleServerConfig:
 
 > ##### 该服务由java编写，采用SpringBoot框架。SMS服务主要负责消息推送中短信发送的实现。对应代码为模块 `sms-api` 和 `sms-svc`。
 
+
+
 需要注意的是，由于某些原因，应用在构建的时候采用了两家的短信服务。一家是京东短信，主要负责短信登录验证码的发送，或者登录错误次数过多的发送。另一个负责推送相关的发送。当然修改为统一一家也十分简单，位于`com/ben/sms/service/impl/SmeServiceImpl.java`这个类下，参考即可修改。
+
+
+
+**后续**
+
+只需要通过maven构建SpringBoot应用，并通过`account-svc/Dockerfile` 构建docker镜像即可。
+
+
+
+
+<hr>
 
 
 
 ### www服务
 
 > 该服务由Node.js编写，采用Koa2框架。www服务主要负责新账户的注册相关服务。对应代码为模块 `www-svc`。
+
+
 
 **api调用**
 
@@ -335,6 +394,8 @@ api: {
 
 如果api无特殊需求不建议修改，这里罗列出来方便查寻。寻址是通过kubernetes的服务发现。
 
+
+
 **MongoDB**
 
 修改`www-svc/config/env/对应环境.js`
@@ -350,5 +411,102 @@ api: {
 
 
 
+**后续**
+
+只需要通过npm安装相关依赖，并通过`www-svc/Dockerfile` 构建docker镜像即可。
+
+
+
+
+<hr>
+
+
+
 ### Mail服务
+
+> 该服务由Node.js编写，采用Koa2框架。www服务主要负责邮件发送的具体实现。对应代码为模块 `mail-svc`。
+
+
+
+**api调用**
+
+修改`mail-svc/config/环境/EndPoint.js`
+
+```javascript
+//这里修改为你前端对应的域名或者ip地址
+base: {
+  get url() {
+    //ex: https://www.lomofu.com
+    return "域名/ip";
+  }
+},
+register: {
+  get url() {
+    //ex: https://www.lomofu.com/register
+    return "域名/ip/register";
+  }
+},
+employee: {
+  get url() {
+     //ex: https://www.lomofu.com/employee
+    return "域名/ip/employee";
+  }
+},
+reset: {
+  get url() {
+     //ex: https://www.lomofu.com/reset
+    return "域名/ip/reset";
+  }
+}
+```
+
+
+
+**smtp**
+
+修改对应你的smtp服务器用来发送邮件。位于`mail-svc/config/SMTP.js`
+
+```javascript
+get server() {
+  //ex :163 支持的sevice名单 https://nodemailer.com/smtp/well-known/
+  return "xxx";
+},
+get user() {
+  //ex : example@example.com
+  return "xxx@xxxx.com";
+},
+get pass() {
+  //ex: 邮箱授权码 这里用base64加密后的
+  return "xxxxx";
+},
+get logo() {
+  //ex: 邮箱末尾的logo 如果你有http服务器可以填写相对应的logo地址
+  return "xxxxx";
+}
+```
+
+
+
+**token**
+
+这个是用来做服务验证的。位于`mail-svc/config/Token.js`
+
+```javascript
+get SECRET() {
+    return "YzA0ODM3ZGY2MWYzNmJhNjg0NjYwOWFlNmI4MTQxZDg5NmQ5NmNiOGJkMjJiYzI1OTU3ZDBmY2ViMDYxNjY5NjIwOTkxYjQ5MDdkMzEzZWQ0NTY4MzRkY2YxNzJhZDA2NDMxNzEyMDc5MjUyOWExY2RkZjE4OGVjYTRlMDMzYWM="
+}
+```
+
+这里的密文对应着account 服务中的secret，当然不改也可以，暂时不启用该校验。
+
+
+
+**后续**
+
+只需要通过npm安装相关依赖，并通过`mail-svc/Dockerfile` 构建docker镜像即可。
+
+
+
+
+<hr>
 
