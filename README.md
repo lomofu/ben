@@ -19,7 +19,7 @@
 
 ### 首页
 
-![首页](img/Ben.- 首页.png)
+![首页](img/Ben.-首页.png)
 
 
 
@@ -61,7 +61,7 @@
 
 ### 排班管理
 
-![APP.-排班管理](img/APP.-项目详情1 .png)
+![APP.-排班管理](img/APP.-项目详情1.png)
 
 
 
@@ -509,4 +509,185 @@ get SECRET() {
 
 
 <hr>
+
+### 前端
+
+#### ben
+
+> 这是未注册或未登录下的单页spa，位于`frontend/ben`下,是一个vue工程。
+
+
+
+**部署url**
+
+修改位于`frontend/ben/.env.环境名`
+
+```vue
+//环境名
+VUE_APP_NAME="DEV"
+//app运行端口
+VUE_APP_PORT = 8080
+//app 未登录域名
+VUE_APP_URL = "http://www.lomofu.com"
+//app 已登录域名
+VUE_APP_CENTER = "http://app.lomofu.com"
+```
+
+
+
+**https**
+
+上线需要https支持，所以修改`frontend/ben/nginx.conf`
+
+```nginx
+//如果需要https 开启
+listen 443 ssl;
+//服务名 ex: www.lomofu.com
+server_name  xxxxx;
+
+ssl_session_timeout 5m;
+ssl_protocols TLSv1 TLSv1.1 TLSv1.2;
+ssl_ciphers   ECDHE-RSA-AES128-GCM-SHA256:ECDHE:ECDH:AES:HIGH:!NULL:!aNULL:!MD5:!ADH:!RC4;
+
+//ssl证书位置 ex:/usr/cert/xxxxxx.pem;
+ssl_certificate your certificate path;
+
+//ssl秘钥位置 ex:/usr/cert/xxxxxxx.key
+ssl_certificate_key your certificate path;
+ssl_prefer_server_ciphers on;
+```
+
+
+
+
+<hr>
+
+#### app
+
+> 这是登录后的单页spa，位于`frontend/app`下，是一个vue工程。
+
+
+
+**部署url**
+
+修改位于`frontend/ben/.env.环境名`
+
+```vue
+//环境名
+VUE_APP_NAME="DEV"
+//app运行端口
+VUE_APP_PORT = 8080
+//app 未登录域名
+VUE_APP_URL = "http://www.lomofu.com"
+//app 已登录域名
+VUE_APP_CENTER = "http://app.lomofu.com"
+//api 后端网关域名
+VUE_APP_GATEWAY="https://api.lomofu.com"
+```
+
+
+
+**https**
+
+上线需要https支持，所以修改`frontend/ben/nginx.conf`
+
+```nginx
+//如果需要https 开启
+listen 443 ssl;
+//服务名 ex: app.lomofu.com
+server_name  xxxxx;
+
+ssl_session_timeout 5m;
+ssl_protocols TLSv1 TLSv1.1 TLSv1.2;
+ssl_ciphers   ECDHE-RSA-AES128-GCM-SHA256:ECDHE:ECDH:AES:HIGH:!NULL:!aNULL:!MD5:!ADH:!RC4;
+
+//ssl证书位置 ex:/usr/cert/xxxxxx.pem;
+ssl_certificate your certificate path;
+
+//ssl秘钥位置 ex:/usr/cert/xxxxxxx.key
+ssl_certificate_key your certificate path;
+ssl_prefer_server_ciphers on;
+```
+
+
+
+## Kubernetes部署文件
+
+部署这里推荐使用rancher的可视化界面完成，非常简单
+
+![rancher控制界面](img/rancher控制界面.png)
+
+部署文件参考位于`k8s/test`下
+
+
+
+### ConfigMap
+
+为了更好配置和管理应用的配置，采用的是configmap统一管理，通过环境变量注入
+
+![configmap配置](img/configmap配置.png)
+
+需要configmap支持的服务的配置文件位于`k8s/test/config`下，该文件中用`xxxxxxx`的都需要修改
+
+例如：`k8s/test/config/bot-config.yaml`
+
+```yaml
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: bot-config
+data:
+  UNDERTOW_IO_THREADS: 8
+  UNDERTOW_WORKER_THREADS: 64
+  UNDERTOW_BUFFER_SIZE: 1024
+  UNDERTOW_MAX_POST: 1000
+  MAIL_SERVICE_ENDPOINT: http://mail-svc:3001
+  ASYNC_CORE_POOL: 10
+  ASYNC_MAX_POOL: 30
+  ASYNC_QUEUE_CAPACITY: 100
+  ASYNC_WAIT_FOR_COMPLETE: true
+  ASYNC_KEEP_ALIVE: 60
+  #redis host ex:  redis-proxy-nlb.jvessel-open-sh.jdcloud.com
+  REDIS_HOST: xxxxxxx
+  REDIS_PORT: 6379
+  REDIS_TIMEOUT: 3000
+  #redis password
+  REDIS_PASSWORD: xxxxxxx
+  #go easy websocket host 参考:https://www.goeasy.io/
+  WEBSOCKET_HOST: http://rest-hangzhou.goeasy.io/publish
+  #go easy key
+  WEBSOCKET_KEY: BC-696d48c8c9794fb6a2ad85230c12365a
+  #rocketmq 服务器地址
+  ROCKETMQ_NAME_SERVER: xxxxxxx
+  #rocketmq 组 可自行配置 ex：bot-producer-dev
+  ROCKETMQ_GROUP: xxxxxxx
+```
+
+ 
+
+### Istio
+
+如果启用服务网格进行服务治理，请务必确认单节点配置不得2core，4GB否则会安装失败。istio的配置文件位于`k8s/test/mesh`下。
+
+> #### 注意：
+>
+> 这里给出的配置文件仅为参考，我在本应用中主要配置了ben，app，gateway三个mesh配置。如果其余服务想要通过mesh治理，参考配置即可。
+
+
+
+流量拓扑图
+
+![Kiali-Console](img/Kiali-Console.png)
+
+
+
+指标监控
+
+![Grafana](img/Grafana.png)
+
+
+
+## 后续
+
+本应用属于本人毕设作品，因服务器原因，在部分情况没有考虑hpa。但是都可以参考kubernetes的网上资料进行部署。关于devops相关实践，稍后会在[这里](https://github.com/lomofu/documents/tree/2020/devops)更新。
 
