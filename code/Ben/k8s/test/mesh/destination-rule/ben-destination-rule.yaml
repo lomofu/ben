@@ -1,0 +1,33 @@
+apiVersion: networking.istio.io/v1alpha3
+kind: DestinationRule
+metadata:
+  name: ben-ds
+  namespace: dev
+spec:
+  host: ben
+  subsets:
+    - labels:
+        app: ben
+        version: v15
+      name: v1
+    - labels:
+        app: ben
+        version: test
+      name: v2
+  trafficPolicy:
+    connectionPool:
+      http:
+        http1MaxPendingRequests: 2000
+        http2MaxRequests: 1024
+        maxRequestsPerConnection: 2000
+        maxRetries: 1024
+      tcp:
+        connectTimeout: 30ms
+        maxConnections: 2000
+    loadBalancer:
+      simple: ROUND_ROBIN
+    outlierDetection:
+      baseEjectionTime: 30s
+      consecutiveErrors: 20
+      interval: 10s
+      maxEjectionPercent: 20

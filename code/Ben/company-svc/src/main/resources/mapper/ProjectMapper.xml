@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ben.company.dao.ProjectMapper">
+    <resultMap id="BaseResultMap" type="com.ben.company.domain.Project">
+        <!--
+          WARNING - @mbg.generated
+        -->
+        <id column="id" jdbcType="VARCHAR" property="id"/>
+        <result column="name" jdbcType="VARCHAR" property="name"/>
+        <result column="description" jdbcType="VARCHAR" property="description"/>
+        <result column="team_id" jdbcType="VARCHAR" property="teamId"/>
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
+        <result column="update_time" jdbcType="TIMESTAMP" property="updateTime"/>
+        <result column="active" jdbcType="BIT" property="active"/>
+    </resultMap>
+
+
+    <select id="selectCountProjectByCompanyId" resultType="java.lang.Integer" parameterType="String">
+    SELECT count(p.id)
+    FROM project p LEFT JOIN team t ON p.team_id = t.id LEFT JOIN company c ON  t.company_id = c.id
+    WHERE company_id = #{companyId,jdbcType=VARCHAR} and p.active = 1
+  </select>
+
+
+    <select id="selectProjectListByCompanyId" resultType="com.ben.company.domain.ProjectList" parameterType="String">
+    SELECT p.id AS id,p.name AS name, p.description AS description, p.create_time AS createTime, p.update_time AS updateTime, p.active AS active, p.team_id AS teamId, t.name AS teamName
+    FROM project p LEFT JOIN team t ON p.team_id = t.id LEFT JOIN company c ON  t.company_id = c.id
+    WHERE company_id = #{companyId,jdbcType=VARCHAR} and p.active = 1
+  </select>
+
+    <select id="selectProjectListByAccountId" resultType="com.ben.company.domain.ProjectList" parameterType="String">
+    SELECT p.id AS id,p.name AS name, p.description AS description, p.create_time AS createTime, p.update_time AS updateTime, p.active AS active, p.team_id AS teamId, t.name AS teamName
+    FROM project p LEFT JOIN project_mapping_account m ON p.id = m.project_id LEFT JOIN team t ON p.team_id = t.id
+    WHERE account_id = #{accountId,jdbcType=VARCHAR} and p.active = 1
+  </select>
+
+</mapper>

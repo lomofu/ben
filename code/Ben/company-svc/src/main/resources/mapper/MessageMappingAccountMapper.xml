@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ben.company.dao.MessageMappingAccountMapper">
+  <resultMap id="BaseResultMap" type="com.ben.company.domain.MessageMappingAccount">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="id" jdbcType="VARCHAR" property="id" />
+    <result column="message_id" jdbcType="VARCHAR" property="messageId" />
+    <result column="account_id" jdbcType="VARCHAR" property="accountId" />
+  </resultMap>
+</mapper>

@@ -1,0 +1,170 @@
+#运行端口
+server:
+  port: 8080
+  http2:
+    enabled: true
+  netty:
+    connection-timeout: 60000
+
+#应用全局设置
+app:
+  env: TEST
+  #服务端点
+  endpoint:
+    account-service-endpoint: ${ACCOUNT_SERVICE_ENDPOINT}
+    bot-service-endpoint: ${BOT_SERVICE_ENDPOINT}
+    company-service-endpoint: ${COMPANY_SERVICE_ENDPOINT}
+    www-service-endpoint: ${WWW_SERVICE_ENDPOINT}
+
+spring:
+  application:
+    name: gateway
+  redis:
+    host: ${REDIS_HOST}
+    port: ${REDIS_PORT:6379}
+    timeout: ${REDIS_TIMEOUT:3000}
+    password: ${REDIS_PASSWORD}
+  cloud:
+    gateway:
+      httpclient:
+        ssl:
+          use-insecure-trust-manager: true
+      globalcors:
+        corsConfigurations:
+          '[/**]':
+            allowedOrigins: "*"
+            allowedHeaders: "*"
+            allowedMethods:
+              - GET
+              - POST
+              - PUT
+              - DELETE
+              - HEAD
+            allowCredentials: true
+            maxAge: 3600
+      routes:
+        - id: account-svc
+          uri: ${ACCOUNT_SERVICE_ENDPOINT}
+          predicates:
+            - Path=/service/account/**
+          filters:
+            - StripPrefix=2
+            - PrefixPath=/api/accounts
+
+        - id: account-search
+          uri: ${ACCOUNT_SERVICE_ENDPOINT}
+          predicates:
+            - Path=/service/search/accounts/**
+          filters:
+            - StripPrefix=3
+            - PrefixPath=/api/search
+
+        - id: company-svc
+          uri: ${COMPANY_SERVICE_ENDPOINT}
+          predicates:
+            - Path=/service/company/**
+          filters:
+            - StripPrefix=2
+            - PrefixPath=/api/companies
+
+        - id: company-search
+          uri: ${COMPANY_SERVICE_ENDPOINT}
+          predicates:
+            - Path=/service/search/companies/**
+          filters:
+            - StripPrefix=3
+            - PrefixPath=/api/search
+
+        - id: team-svc
+          uri: ${COMPANY_SERVICE_ENDPOINT}
+          predicates:
+            - Path=/service/team/**
+          filters:
+            - StripPrefix=2
+            - PrefixPath=/api/teams
+
+        - id: project-svc
+          uri: ${COMPANY_SERVICE_ENDPOINT}
+          predicates:
+            - Path=/service/project/**
+          filters:
+            - StripPrefix=2
+            - PrefixPath=/api/projects
+
+        - id: job-svc
+          uri: ${COMPANY_SERVICE_ENDPOINT}
+          predicates:
+            - Path=/service/job/**
+          filters:
+            - StripPrefix=2
+            - PrefixPath=/api/jobs
+
+        - id: push-svc
+          uri: ${COMPANY_SERVICE_ENDPOINT}
+          predicates:
+            - Path=/service/push/**
+          filters:
+            - StripPrefix=2
+            - PrefixPath=/api/push
+
+        - id: bot-svc
+          uri: ${BOT_SERVICE_ENDPOINT}
+          predicates:
+            - Path=/service/bot/**
+          filters:
+            - StripPrefix=2
+            - PrefixPath=/api/bot
+
+        - id: www-svc
+          uri: ${WWW_SERVICE_ENDPOINT}
+          predicates:
+            - Path=/service/www/**
+          filters:
+            - StripPrefix=2
+            - PrefixPath=/api/signup
+
+#跳过网关验证
+auth:
+  url:
+    skip:
+      #www服务 创建新的管理员账户1
+      - method: post
+        url: /service/www/createNewAdmin
+      #www服务 激活admin账号
+      - method: post
+        url: /service/www/register
+      #www服务 校验token
+      - method: get
+        url: /service/www/validateToken
+      #account服务 创建新的管理员账户2
+      - method: get
+        url: /service/account/account
+      #account服务 校验登陆状态
+      - method: get
+        url: /service/account/login
+      #account服务 登陆
+      - method: post
+        url: /service/account/login
+      #account服务 获取验证码
+      - method: get
+        url: /service/account/code
+      #account服务 手机验证码登陆
+      - method: post
+        url: /service/account/loginWithCode
+      #
+      - method: get
+        url: /service/account/tempEmployee
+      #account服务 雇员激活账号
+      - method: post
+        url: /service/account/employee
+      #account服务 验证是否唯一
+      - method: get
+        url: /service/account/isUnique
+      #bot服务 发送注册邮件
+      - method: post
+        url: /service/bot/mail/createNewAdmin
+
+
+jasypt:
+  encryptor:
+    password: 5d8f199d2073b96f66acedb94b03f043b4b610fde87e1709ff24bbc3ad7416eae719e3f346be24aa7f3901e742cdcd25f62a9fe8512dab3c43d37cee2cd4e0d7

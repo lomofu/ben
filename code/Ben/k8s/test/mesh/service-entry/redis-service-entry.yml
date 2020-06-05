@@ -1,0 +1,13 @@
+#如果你的redis连接是外部不在网格内，可以通过service entry注册
+apiVersion: networking.istio.io/v1alpha3
+kind: ServiceEntry
+metadata:
+  name: redis-entry
+spec:
+  hosts:
+    - your redis host
+#   - redis.jdcloud.com
+  ports:
+    - number: 6379
+      name: redis
+      protocol: TCP

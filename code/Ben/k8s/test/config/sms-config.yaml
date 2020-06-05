@@ -1,0 +1,38 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: sms-config
+data:
+  BOT_SERVICE_ENDPOINT: http://bot-svc:8080
+  #jd短信 access key
+  JD_ACCESS_KEY: xxxxxxx
+  #jd短信 secret
+  JD_SECRET_KEY: xxxxxxx
+  #jd sign id
+  JD_SIGN_ID: xxxxxxx
+  #jd region ex: cn-north-1
+  JD_REGION: xxxxxxx
+  #创建的模板id 登录短信验证码
+  JD_TEMPLATE_PHONE_CODE: xxxxxxx
+  #创建的模板id 登录次数过多
+  JD_TEMPLATE_LOGIN_TO_MUCH: xxxxxxx
+  #阿里短信 access key
+  AL_ACCESS_KEY: xxxxxxx
+  #阿里短信 secret
+  AL_SECRET_ACCESS_KEY: xxxxxxx
+  #阿里短信 Sign id
+  AL_SIGN_ID: Ben
+  #阿里短信 region ex: cn-hangzhou
+  AL_REGION: xxxxxxx
+  #阿里短信 domain ex: dysmsapi.aliyuncs.com
+  AL_DOMAIN: xxxxxxx
+  #阿里短信 version ex: 2017-05-25
+  AL_VERSION: xxxxxxx
+  #创建的模板id 推送公告
+  AL_TEMPLATE_NOTIFICATION: xxxxxxx
+  #创建的模板id 排班推送
+  AL_TEMPALTE_SCHEDULE: xxxxxxx
+  #rocketmq 服务器地址
+  ROCKETMQ_NAME_SERVER: xxxxxxx
+  #rocketmq 组 可自行配置 ex：bot-producer-dev
+  ROCKETMQ_GROUP: xxxxxxx

@@ -1,0 +1,98 @@
+div {
+  margin: 0;
+  padding: 0;
+}
+
+p {
+  word: {
+    wrap: break-word;
+    break: break-all;
+  }
+
+  overflow: hidden;
+}
+
+.price {
+  &-main {
+    width: 100vw;
+    height: 100%;
+    &::after{
+      @include before-after(30px);
+    }
+  }
+
+  &-box {
+    @include color2;
+    height: 440px;
+  }
+
+  &-content {
+    width: 100vw;
+    margin-top: -8%;
+  }
+
+  &-title {
+    &::before {
+      @include before-after(70px);
+    }
+    @include font-light;
+    font-size: 50px;
+    color: white;
+    text-shadow: $text-shadow;
+    &::after {
+      @include before-after(10px);
+    }
+  }
+  .sliceCard {
+    &::before {
+      @include before-after(10vh);
+    }
+  }
+
+  &-question {
+    &-title {
+      font-size: 40px;
+      @include font-light;
+    }
+  }
+
+  .question {
+    &-title {
+      @include font;
+      font-size: 24px;
+    }
+    &-answer {
+      @include font-light;
+      font-size: 18px;
+      width: 500px;
+      color: #757575;
+    }
+  }
+
+  @media screen and (max-width: 767px) {
+    .price {
+      width: 100%;
+      clear: both;
+      height: 100%;
+
+      &-title {
+        font-size: 30px;
+      }
+      &-content {
+        margin-top: -40%;
+      }
+    }
+    .question {
+      &-title {
+        font-size: 20px;
+        text-align: center;
+      }
+
+      &-answer {
+        font-size: 14px;
+        padding: 15px;
+        width: 370px;
+      }
+    }
+  }
+}

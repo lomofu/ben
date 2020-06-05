@@ -1,0 +1,43 @@
+#运行端口
+server:
+  port: 8092
+  http2:
+    enabled: true
+
+#应用全局设置
+app:
+  env: LOCAL
+  #服务端点
+  endpoint:
+    bot-service-endpoint: http://localhost:8091
+    sms-service-endpoint: http://localhost:8092
+  sms:
+    jd:
+      #京东短信
+      access-key-id: xxxxx
+      secret-access-key: xxxxx
+      sign-id: xxxxx
+      region: xxxxx
+      template:
+        phoneCode: xxxxx
+        loginToMuch: xxxxx
+    alibaba:
+      #阿里短信
+      access-key-id: xxxxx
+      secret-access-key: xxxxx
+      sign-id: xxxxx
+      region: xxxxx
+      domain: xxxxx
+      version: xxxxx
+      template:
+        notification: xxxxx
+        schedule: xxxxx
+
+spring:
+  application:
+    name: sms-svc
+
+rocketmq:
+  name-server: 127.0.0.1:9876
+  producer:
+    group: bot-producer-local

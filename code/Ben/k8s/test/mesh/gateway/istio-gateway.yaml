@@ -1,0 +1,30 @@
+apiVersion: networking.istio.io/v1alpha3
+kind: Gateway
+metadata:
+  name: ben-gateway
+  namespace: dev
+spec:
+  selector:
+    istio: ingressgateway
+  servers:
+    - hosts:
+       #- www.lomofu.com
+        - xxxxxxx
+      port:
+        name: http
+        number: 80
+        protocol: HTTP
+    - hosts:
+        #- app.lomofu.com
+        - xxxxxxx
+      port:
+        name: http2
+        number: 80
+        protocol: HTTP
+    - hosts:
+        #- api.lomofu.com
+        - xxxxxxx
+      port:
+        name: http3
+        number: 80
+        protocol: HTTP

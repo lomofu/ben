@@ -1,0 +1,68 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: app-ingress
+  namespace: istio-system
+spec:
+  rules:
+#    - host: app.ben.com your dns address
+      http:
+        paths:
+          - backend:
+              serviceName: xxxxxx
+              servicePort: 80
+  tls:
+    - hosts:
+#        - ex: app.ben.com your dns address
+      secretName: app
+status:
+  loadBalancer:
+    ingress:
+#      - ip: your server ip
+#      - ip: your server ip
+#      - ip: your server ip
+---
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: ben-ingress
+  namespace: istio-system
+spec:
+  rules:
+#    - host: ex: www.ben.com your dns address
+      http:
+        paths:
+          - backend:
+              serviceName: xxxxxx
+              servicePort: 80
+status:
+  loadBalancer:
+    ingress:
+#      - ip: your server ip
+#      - ip: your server ip
+#      - ip: your server ip
+
+---
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: gateway-ingress
+  namespace: istio-system
+spec:
+  rules:
+#    - host: ex: api.ben.com your dns address
+      http:
+        paths:
+          - backend:
+              serviceName: xxxxx
+              servicePort: 80
+  tls:
+    - hosts:
+#        - api.ben.com
+      secretName: api
+status:
+  loadBalancer:
+    ingress:
+#      - ip: your server ip
+#      - ip: your server ip
+#      - ip: your server ip

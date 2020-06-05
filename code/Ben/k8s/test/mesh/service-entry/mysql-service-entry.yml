@@ -1,0 +1,13 @@
+#如果你的mysql连接是外部不在网格内，可以通过service entry注册
+apiVersion: networking.istio.io/v1alpha3
+kind: ServiceEntry
+metadata:
+  name: mysql-entry
+spec:
+  hosts:
+     - your mysql host
+#    - mysql-.rds.jdcloud.com
+  ports:
+    - number: 3306
+      name: jdbc
+      protocol: TCP

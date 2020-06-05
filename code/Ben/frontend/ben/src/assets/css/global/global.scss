@@ -1,0 +1,73 @@
+$base-color: #24acc0;
+$font: PingFangNormal, Microsoft YaHei, 黑体, sans-serif;
+$font-light: PingFangLight, Microsoft YaHei, 黑体, sans-serif;
+$font-lighter: PingFangLighter, Microsoft YaHei, 黑体, sans-serif;
+$font-bold: PingFangBold, Microsoft YaHei, 黑体, sans-serif;
+$text-shadow: 0 0 16px #00000029;
+
+@mixin div {
+  html,
+  body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+  }
+  div {
+    margin: 0;
+    padding: 0;
+  }
+}
+
+@mixin before-after($height) {
+  display: block;
+  content: "";
+  width: 100%;
+  height: $height;
+}
+
+@mixin color {
+  background: #26c6da;
+  background: -webkit-linear-gradient(to right, #fbe594, #26c6da);
+  background: linear-gradient(to right, #fbe594, #26c6da);
+}
+@mixin color2 {
+  background: #355c7d;
+  background: -webkit-linear-gradient(to right, #d58199, #857294, #39698d);
+  background: linear-gradient(to right, #d58199, #857294, #39698d);
+}
+
+@mixin btn-color {
+  background: #f46b45;
+  background: -webkit-linear-gradient(to right, #eea849, #f46b45);
+  background: linear-gradient(to right, #eea849, #f46b45);
+}
+
+@mixin font {
+  font: {
+    family: $font;
+    weight: normal;
+  }
+}
+
+@mixin font-light {
+  font: {
+    family: $font-light;
+    weight: lighter;
+  }
+}
+
+@mixin font-lighter {
+  font: {
+    family: $font-lighter;
+    weight: lighter;
+  }
+}
+
+@mixin font-bold {
+  font: {
+    family: $font-bold;
+    weight: bold;
+  }
+}
+
+@include div;

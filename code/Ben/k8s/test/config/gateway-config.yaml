@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: gateway-config
+data:
+  ACCOUNT_SERVICE_ENDPOINT: http://account-svc:8080
+  BOT_SERVICE_ENDPOINT: http://bot-svc:8080
+  COMPANY_SERVICE_ENDPOINT: http://company-svc:8080
+  WWW_SERVICE_ENDPOINT: http://www-svc:3000
+  #redis host ex:  redis-proxy-nlb.jvessel-open-sh.jdcloud.com
+  REDIS_HOST: xxxxxxx
+  REDIS_PORT: 6379
+  REDIS_TIMEOUT: 3000
+  #redis password
+  REDIS_PASSWORD: xxxxxxx

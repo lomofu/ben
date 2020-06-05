@@ -1,0 +1,35 @@
+.footer {
+  &-ben {
+    @include font-bold;
+    font-size: 30px;
+    color: black;
+  }
+  &-ben::before {
+    @include before-after(20px);
+  }
+  &-support {
+    @include font-bold;
+  }
+  @include font-bold;
+}
+
+.pt-0 {
+  @include font;
+}
+
+.container {
+  width: 100vw;
+}
+img {
+  width: 50px;
+  height: 50px;
+}
+
+strong {
+  font-size: 1.22rem;
+}
+
+a {
+  font-size: 0.93rem;
+  color: gray;
+}

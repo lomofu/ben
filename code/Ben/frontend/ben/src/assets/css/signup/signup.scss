@@ -1,0 +1,82 @@
+div {
+  @include div;
+}
+
+p {
+  word: {
+    wrap: break-word;
+    break: break-all;
+  }
+  overflow: hidden;
+}
+
+.register {
+  @include color2;
+  height: 100%;
+  width: 100%;
+
+  &-title {
+    &::before {
+      @include before-after(30px);
+    }
+    &-icon {
+      font-size: 80px;
+      text-shadow: $text-shadow;
+      margin-right: 15px;
+    }
+    &-word {
+      font-size: 50px;
+      @include font-bold;
+      position: relative;
+      top: 10px;
+      color: white;
+      text-shadow: $text-shadow;
+    }
+  }
+
+  &-subtitle {
+    @include font-light;
+    font-size: 35px;
+    color: white;
+    text-shadow: $text-shadow;
+    padding: 10px;
+  }
+
+  .signup {
+    min-width: 250px;
+    max-width: 600px;
+    padding: 20px;
+  }
+
+  .content1 {
+    &::before {
+      @include before-after(50px);
+    }
+    color: white;
+    text-shadow: $text-shadow;
+  }
+  .subinfo {
+    width: 100vw;
+    position: fixed;
+    bottom: 20px;
+  }
+  .done{
+    @include font-light;
+    font-size: 4rem;
+    color: white;
+  }
+}
+
+@media screen and (max-width: 800px) {
+  .register-title-icon {
+    font-size: 70px;
+  }
+
+  .register-title-word {
+    font-size: 35px;
+  }
+
+  .register-subtitle {
+    font-size: 23px;
+  }
+}

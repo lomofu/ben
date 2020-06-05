@@ -1,0 +1,93 @@
+@mixin virtualclass($height) {
+  @include before-after($height);
+  pointer-events: none;
+}
+
+p {
+  word-wrap: break-word;
+  word-break: break-all;
+  overflow: hidden;
+  color: grey;
+}
+
+.login {
+  margin: 0;
+  width: 100%;
+  height: 100%;
+
+  &-btn-back {
+    &::before {
+      @include before-after(10px);
+    }
+    &::after {
+      @include before-after(10px);
+    }
+  }
+
+  &-left {
+    box-shadow: 6px 0px 20px 2px rgba(0, 0, 0, 0.05);
+    width: 95%;
+    margin: 0;
+    padding: 0;
+    opacity: 0.9;
+  }
+
+  img {
+    width: 60px;
+    height: 60px;
+  }
+  &-ben {
+    @include font-bold;
+    font-size: 35px;
+    color: black;
+    margin: auto auto 10px 15px;
+    &:hover {
+      color: $base-color;
+    }
+  }
+  &-content-subtitle {
+    @include font-light;
+    font-size: 25px;
+    letter-spacing: 1px;
+    &::before {
+      @include virtualclass(10px);
+    }
+    &::after {
+      @include virtualclass(10px);
+    }
+  }
+  .panel {
+    padding: 20px;
+  }
+}
+
+@media screen and (max-width: 980px) {
+  .login-left {
+    display: none;
+  }
+}
+
+.login-panel {
+  a {
+    color: #289fb4;
+  }
+  .btn-login {
+    &::before {
+      @include before-after(20px);
+      clear: both;
+    }
+    &::after {
+      @include before-after(10px);
+    }
+  }
+  .word {
+    padding: 8px;
+    font-size: 14px;
+    letter-spacing: 2px;
+  }
+  .s-word {
+    padding: 24px;
+    letter-spacing: 2px;
+    font-weight: 500;
+  }
+}

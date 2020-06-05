@@ -1,0 +1,39 @@
+#运行端口
+server:
+  port: 8080
+  http2:
+    enabled: true
+
+#应用全局设置
+app:
+  env: TEST
+  #服务端点
+  endpoint:
+    mail-service-endpoint: ${MAIL_SERVICE_ENDPOINT}
+    bot-service-endpoint: ${BOT_SERVICE_ENDPOINT}
+  #线程池
+  async-thread-pool:
+    core-pool-size: ${ASYNC_CORE_POOL:10}
+    max-pool-size: ${ASYNC_MAX_POOL:30}
+    queue-capacity: ${ASYNC_QUEUE_CAPACITY:100}
+    wait-for-tasks-complete: ${ASYNC_WAIT_FOR_COMPLETE:true}
+    keep-alive: ${ASYNC_KEEP_ALIVE:60}
+    thread-prefix-name: BenAsyncThread-
+  #websocket
+  websocket:
+    host: ${WEBSOCKET_HOST}
+    key: ${WEBSOCKET_KEY}
+
+spring:
+  application:
+    name: bot-svc
+  redis:
+    host: ${REDIS_HOST}
+    port: ${REDIS_PORT:6379}
+    timeout: ${REDIS_TIMEOUT:3000}
+    password: ${REDIS_PASSWORD}
+
+rocketmq:
+  name-server: ${ROCKETMQ_NAME_SERVER}
+  producer:
+    group: ${ROCKETMQ_GROUP}

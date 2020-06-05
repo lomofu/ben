@@ -1,0 +1,23 @@
+apiVersion: networking.istio.io/v1alpha3
+kind: DestinationRule
+metadata:
+  name: gateway-ds
+  namespace: dev
+spec:
+  host: gateway
+  subsets:
+    - labels:
+        app: gateway
+        version: test
+      name: v1
+  trafficPolicy:
+    connectionPool:
+      http:
+        http1MaxPendingRequests: 2000
+        http2MaxRequests: 1024
+        maxRequestsPerConnection: 2000
+        maxRetries: 1024
+      tcp:
+        maxConnections: 2000
+    loadBalancer:
+      simple: ROUND_ROBIN

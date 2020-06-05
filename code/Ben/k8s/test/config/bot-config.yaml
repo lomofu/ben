@@ -1,0 +1,29 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: bot-config
+data:
+  UNDERTOW_IO_THREADS: 8
+  UNDERTOW_WORKER_THREADS: 64
+  UNDERTOW_BUFFER_SIZE: 1024
+  UNDERTOW_MAX_POST: 1000
+  MAIL_SERVICE_ENDPOINT: http://mail-svc:3001
+  ASYNC_CORE_POOL: 10
+  ASYNC_MAX_POOL: 30
+  ASYNC_QUEUE_CAPACITY: 100
+  ASYNC_WAIT_FOR_COMPLETE: true
+  ASYNC_KEEP_ALIVE: 60
+  #redis host ex:  redis-proxy-nlb.jvessel-open-sh.jdcloud.com
+  REDIS_HOST: xxxxxxx
+  REDIS_PORT: 6379
+  REDIS_TIMEOUT: 3000
+  #redis password
+  REDIS_PASSWORD: xxxxxxx
+  #go easy websocket host 参考:https://www.goeasy.io/
+  WEBSOCKET_HOST: http://rest-hangzhou.goeasy.io/publish
+  #go easy key
+  WEBSOCKET_KEY: BC-696d48c8c9794fb6a2ad85230c12365a
+  #rocketmq 服务器地址
+  ROCKETMQ_NAME_SERVER: xxxxxxx
+  #rocketmq 组 可自行配置 ex：bot-producer-dev
+  ROCKETMQ_GROUP: xxxxxxx

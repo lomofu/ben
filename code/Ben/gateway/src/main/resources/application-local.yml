@@ -1,0 +1,161 @@
+#运行端口
+server:
+  port: 8088
+
+app:
+  env: LOCAL
+  #服务端点
+  endpoint:
+    gateway-service-endpoint: http://localhost:8088
+    account-service-endpoint: http://localhost:8089
+    company-service-endpoint: http://localhost:8090
+    www-service-endpoint: http://localhost:3000
+    mail-service-endpoint: http://localhost:3001
+
+spring:
+  application:
+    name: gateway
+  redis:
+    host: 127.0.0.1
+    port: 6379
+    timeout: 3000
+  cloud:
+    gateway:
+      globalcors:
+        corsConfigurations:
+          '[/**]':
+            allowedOrigins: "*"
+            allowedHeaders: "*"
+            allowedMethods:
+              - GET
+              - POST
+              - PUT
+              - DELETE
+              - HEAD
+            allowCredentials: true
+            maxAge: 3600
+      routes:
+        - id: account-svc
+          uri: http://localhost:8089
+          predicates:
+            - Path=/service/account/**
+          filters:
+            - StripPrefix=2
+            - PrefixPath=/api/accounts
+
+        - id: account-search
+          uri: http://localhost:8089
+          predicates:
+            - Path=/service/search/accounts/**
+          filters:
+            - StripPrefix=3
+            - PrefixPath=/api/search
+
+        - id: company-svc
+          uri: http://localhost:8090
+          predicates:
+            - Path=/service/company/**
+          filters:
+            - StripPrefix=2
+            - PrefixPath=/api/companies
+
+        - id: company-search
+          uri: http://localhost:8090
+          predicates:
+            - Path=/service/search/companies/**
+          filters:
+            - StripPrefix=3
+            - PrefixPath=/api/search
+
+        - id: team-svc
+          uri: http://localhost:8090
+          predicates:
+            - Path=/service/team/**
+          filters:
+            - StripPrefix=2
+            - PrefixPath=/api/teams
+
+        - id: project-svc
+          uri: http://localhost:8090
+          predicates:
+            - Path=/service/project/**
+          filters:
+            - StripPrefix=2
+            - PrefixPath=/api/projects
+
+        - id: job-svc
+          uri: http://localhost:8090
+          predicates:
+            - Path=/service/job/**
+          filters:
+            - StripPrefix=2
+            - PrefixPath=/api/jobs
+
+        - id: push-svc
+          uri: http://localhost:8090
+          predicates:
+            - Path=/service/push/**
+          filters:
+            - StripPrefix=2
+            - PrefixPath=/api/push
+
+        - id: bot-svc
+          uri: http://localhost:8091
+          predicates:
+            - Path=/service/bot/**
+          filters:
+            - StripPrefix=2
+            - PrefixPath=/api/bot
+
+        - id: www-svc
+          uri: http://localhost:3000
+          predicates:
+            - Path=/service/www/**
+          filters:
+            - StripPrefix=2
+            - PrefixPath=/api/signup
+
+#跳过网关验证
+auth:
+  url:
+    skip:
+      #www服务 创建新的管理员账户1
+      - method: post
+        url: /service/www/createNewAdmin
+      #www服务 激活admin账号
+      - method: post
+        url: /service/www/register
+      #www服务 校验token
+      - method: get
+        url: /service/www/validateToken
+      #account服务 创建新的管理员账户2
+      - method: get
+        url: /service/account/account
+      #account服务 获取临时雇员信息
+      - method: get
+        url: /service/account/tempEmployee
+      #account服务 校验登陆状态
+      - method: get
+        url: /service/account/login
+      #account服务 账号密码登陆
+      - method: post
+        url: /service/account/login
+      #account服务 获取验证码
+      - method: get
+        url: /service/account/code
+      #account服务 短信验证码登陆
+      - method: post
+        url: /service/account/loginWithCode
+      #account服务 雇员激活账号
+      - method: post
+        url: /service/account/employee
+      #account服务 验证是否唯一
+      - method: get
+        url: /service/account/isUnique
+      #bot服务 发送注册邮件
+      - method: post
+        url: /service/bot/mail/createNewAdmin
+
+logging:
+  level:
+    org.springframework.cloud.gateway: trace

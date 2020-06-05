@@ -1,0 +1,27 @@
+apiVersion: networking.istio.io/v1alpha3
+kind: DestinationRule
+metadata:
+  name: app-ds
+  namespace: dev
+spec:
+  host: app
+  subsets:
+    - labels:
+        version: test
+      name: v1
+  trafficPolicy:
+    connectionPool:
+      http:
+        http1MaxPendingRequests: 1024
+        http2MaxRequests: 1024
+        maxRequestsPerConnection: 1024
+        maxRetries: 1024
+      tcp:
+        maxConnections: 1024
+    loadBalancer:
+      simple: ROUND_ROBIN
+    outlierDetection:
+      baseEjectionTime: 30s
+      consecutiveErrors: 5
+      interval: 10s
+      maxEjectionPercent: 10

@@ -1,0 +1,57 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: account-config
+data:
+  UNDERTOW_IO_THREADS: 8
+  UNDERTOW_WORKER_THREADS: 64
+  UNDERTOW_BUFFER_SIZE: 1024
+  UNDERTOW_MAX_POST: 1000
+  ACCOUNT_SERVICE_ENDPOINT: http://account-svc:8080
+  BOT_SERVICE_ENDPOINT: http://bot-svc:8080
+  COMPANY_SERVICE_ENDPOINT: http://company-svc:8080
+  ASYNC_CORE_POOL: 10
+  ASYNC_MAX_POOL: 30
+  ASYNC_QUEUE_CAPACITY: 100
+  ASYNC_WAIT_FOR_COMPLETE: true
+  ASYNC_KEEP_ALIVE: 60
+  #阿里oss endpoint ex：https://oss-cn-shanghai.aliyuncs.com
+  OSS_ENDPOINT: your oss endpoint
+  #阿里oss url访问 ex：https://ben-k8s.oss-cn-shanghai.aliyuncs.com
+  OSS_URL: xxxxxxx
+  #阿里oss bucket
+  OSS_BUCKET: xxxxxxx
+  #阿里access key 可以在管理子账户中创建获取
+  AL_ACCESS_KEY: xxxxxxx
+  #阿里access key secret
+  ALIBABA_ACCESS_KEY_SECRET: xxxxxxx
+  #elasticsearch rest地址 ex：http://服务器ip:9200
+  ES_REST_URL: xxxxxxx
+  #elasticsearch 集群名称 通过上述url访问可得到
+  ES_CLUSTER_NAME: xxxxxxx
+  #elasticsearch tcp连接 ex：服务器ip:9300
+  ES_CLUSTER_NODE: xxxxxxx
+  #MongoDB连接 ex：mongodb://mongodb.xxxx.com:27017/ben
+  MONGODB_URL: xxxxxxx
+  #redis host ex:  redis-proxy-nlb.jvessel-open-sh.jdcloud.com
+  REDIS_HOST: xxxxxxx
+  #redis port
+  REDIS_PORT: 6379
+  REDIS_TIMEOUT: 3000
+  #redis password
+  REDIS_PASSWORD: xxxxxxx
+  #seata tx group  ex: ben-tx-group 可自行配置
+  SEATA_TX_GROUP: xxxxxxx
+  #mysql jdbc connect ex:  jdbc:mysql://mysql-internet-cn-east-2-.rds.jdcloud.com:3306/ben_account?useUnicode=true&characterEncoding=utf8&&autoReconnect=true&useSSL=false&&serverTimezone=CTT
+  ACCOUNT_DATASOURCE_URL: xxxxxxx
+  #mysql accountname
+  ACCOUNT_DATASOURCE_USERNAME: xxxxxxx
+  #mysql password
+  ACCOUNT_DATASOURCE_PASSWORD: xxxxxxx
+  DRUID_INITIAL_SIZE: 5
+  DRUID_MIN_SIZE: 5
+  DRUID_MAX_SIZE: 10
+  #druid username 可自行配置
+  DRUID_LOGIN_USERNAME: xxxxxxx
+  #druid password 可自行配置
+  DRUID_LOGIN_PASSWORD: xxxxxxx

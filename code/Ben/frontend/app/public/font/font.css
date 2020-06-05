@@ -1,0 +1,27 @@
+@font-face {
+  font-family: "PingFangLight";
+  src: url("sf-pro-text_light.woff2");
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "PingFangLighter";
+  src: url("KFOLighter.woff2");
+
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "PingFangNormal";
+  src: url("KFORegular.woff2");
+  font-weight: normal;
+  font-style: normal;
+}
+@font-face {
+  font-family: "PingFangBold";
+  src: url("KFOBold.woff2");
+  font-weight: normal;
+  font-style: normal;
+}

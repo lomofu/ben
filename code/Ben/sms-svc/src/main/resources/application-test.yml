@@ -1,0 +1,43 @@
+#运行端口
+server:
+  port: 8080
+  http2:
+    enabled: true
+
+#应用全局设置
+app:
+  env: TEST
+  #服务端点
+  endpoint:
+    bot-service-endpoint: http://localhost:8091
+    sms-service-endpoint: http://localhost:8092
+  sms:
+    jd:
+      #京东短信
+      access-key-id: ${JD_ACCESS_KEY}
+      secret-access-key: ${JD_SECRET_KEY}
+      sign-id: ${JD_SIGN_ID}
+      region: ${JD_REGION:cn-north-1}
+      template:
+        phoneCode: ${JD_TEMPLATE_PHONE_CODE}
+        loginToMuch: ${JD_TEMPLATE_LOGIN_TO_MUCH}
+    alibaba:
+      #阿里短信
+      access-key-id: ${AL_ACCESS_KEY}
+      secret-access-key: ${AL_SECRET_ACCESS_KEY}
+      sign-id: ${AL_SIGN_ID}
+      region: ${AL_REGION:cn-hangzhou}
+      domain: ${AL_DOMAIN:dysmsapi.aliyuncs.com}
+      version: ${AL_VERSION:2017-05-25}
+      template:
+        notification: ${AL_TEMPLATE_NOTIFICATION}
+        schedule: ${AL_TEMPALTE_SCHEDULE}
+
+spring:
+  application:
+    name: sms-svc
+
+rocketmq:
+  name-server: ${ROCKETMQ_NAME_SERVER}
+  producer:
+    group: ${ROCKETMQ_GROUP}

@@ -1,0 +1,38 @@
+#运行端口
+server:
+  port: 8091
+  http2:
+    enabled: true
+
+#应用全局设置
+app:
+  env: LOCAL
+  #服务端点
+  endpoint:
+    mail-service-endpoint: http://localhost:3001
+  #线程池
+  async-thread-pool:
+    core-pool-size: 2
+    max-pool-size: 10
+    queue-capacity: 100
+    wait-for-tasks-complete: true
+    keep-alive: 60
+    thread-prefix-name: BenAsyncThread-
+  #go easy websocket
+  websocket:
+    host: xxxxx
+    key: xxxxx
+
+spring:
+  application:
+    name: bot-svc
+  redis:
+    host: localhost
+    port: 6379
+    timeout: 3000
+    database: 1
+
+rocketmq:
+  name-server: 127.0.0.1:9876
+  producer:
+    group: bot-producer-local

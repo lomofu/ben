@@ -1,0 +1,87 @@
+div {
+  margin: 0;
+}
+
+a {
+  min-width: 141px;
+  @include font;
+  :hover {
+    color: black;
+    cursor: pointer;
+  }
+}
+
+.nav {
+  max-width: 100vw;
+  &-bar {
+    @include color2;
+  }
+
+  &-icon {
+    text-shadow: $text-shadow;
+    &:hover {
+      color: black;
+      cursor: pointer;
+    }
+  }
+
+  &-title {
+    text-shadow: $text-shadow;
+    position: relative;
+    top: 6px;
+    left: 8px;
+    color: white;
+    @include font-bold;
+    clear: both;
+    font-size: 30px;
+    &:hover {
+      color: black;
+      cursor: pointer;
+    }
+    &::after {
+      display: block;
+      content: "";
+      width: 100%;
+      height: 10px;
+    }
+  }
+
+  &-phone-btn {
+    text-shadow: $text-shadow;
+    margin: {
+      bottom: 5px;
+    }
+    .phone-showMeun {
+      z-index: 999;
+      right: 2%;
+      position: absolute;
+      top: 88%;
+      .phone-icon {
+        position: relative;
+        top: 1px;
+        font-size: 1rem;
+      }
+    }
+  }
+
+  &-btn-select {
+    font: {
+      weight: 400;
+      family: $font;
+      size: 0.9rem;
+    }
+    padding: 30px;
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .col-12 {
+    flex: 0 1 90% !important;
+  }
+  .list-item {
+    padding: 0 30px 0 30px;
+  }
+  .v-toolbar__content {
+    padding: -1px 16px !important;
+  }
+}

@@ -1,0 +1,24 @@
+apiVersion: networking.istio.io/v1alpha3
+kind: VirtualService
+metadata:
+  name: ben-virtual-service
+  namespace: dev
+spec:
+  gateways:
+    - ben-gateway
+  hosts:
+    - www.lomofu.com
+  http:
+    - route:
+        - destination:
+            host: ben
+            port:
+              number: 80
+            subset: v1
+          weight: 0
+        - destination:
+            host: ben
+            port:
+              number: 80
+            subset: v2
+          weight: 100

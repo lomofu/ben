@@ -1,0 +1,139 @@
+.support {
+  width: 100vw;
+  color: black;
+  padding: 0;
+  margin: 0;
+
+  p {
+    word-wrap: break-word;
+    word-break: break-all;
+    overflow: hidden;
+  }
+
+  .supp-title {
+    @include font-bold;
+    font-size: 30px;
+  }
+  .subtitle {
+    &::before {
+      @include before-after(150px);
+    }
+  }
+
+  height: 100%;
+  &-main {
+    @include color2;
+    height: 550px;
+    width: 100vw;
+    &-title {
+      width: 100vw;
+      color: #f2f2f2;
+      font-size: 50px;
+      @include font-light;
+      text-shadow: $text-shadow;
+      &::before {
+        @include before-after(100px);
+      }
+    }
+    &-icon {
+      height: 300px;
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+      background: url("~svg/about.svg") no-repeat center;
+      background-size: auto 70%;
+      &::before {
+        @include before-after(50px);
+      }
+    }
+  }
+  &-content {
+    height: 550px;
+  }
+
+  &-content1 {
+    height: 350px;
+    .img1 {
+      height: 100px;
+      width: 100px;
+    }
+    .title1 {
+      font-size: 25px;
+      @include font-bold;
+      &::before {
+        @include before-after(50px);
+      }
+      &::after {
+        @include before-after(20px);
+      }
+    }
+  }
+  &-content2 {
+    height: auto;
+    padding: 20px;
+    .content {
+      padding: 10px;
+    }
+    .img2 {
+      width: 80px;
+      height: 80px;
+    }
+    .title2 {
+      font-size: 25px;
+      @include font-bold;
+      &::after {
+        @include before-after(10px);
+      }
+    }
+  }
+  &-content3 {
+    height: 400px;
+    .content {
+      padding: 5px;
+    }
+    .img3 {
+      width: 80px;
+      height: 80px;
+    }
+    .contact {
+      font-size: 25px;
+      @include font-bold;
+      &::after {
+        @include before-after(10px);
+      }
+    }
+  }
+
+  @media screen and (max-width: 767px) {
+    .support-main-title {
+      font-size: 40px;
+    }
+    p {
+      padding: 10px;
+    }
+    .img1 {
+      width: 60px;
+      height: auto;
+    }
+    .content1-icon {
+      font-size: 60px !important;
+    }
+    .img2 {
+      width: 60px;
+      height: auto;
+    }
+    .content2-icon {
+      font-size: 60px !important;
+    }
+    .img3 {
+      width: 60px;
+      height: auto;
+    }
+    .content3-icon {
+      font-size: 60px !important;
+    }
+    .support-main-icon {
+      background-size: auto 55%;
+    }
+  }
+}

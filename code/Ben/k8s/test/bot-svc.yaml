@@ -1,0 +1,70 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: bot-svc
+  namespace: dev
+spec:
+  replicas: 1
+  revisionHistoryLimit: 10
+  strategy:
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 0
+    type: RollingUpdate
+  template:
+    metadata:
+      labels:
+        app: bot-svc
+        version: v16
+    spec:
+      containers:
+        - name: bot-svc
+          #镜像地址
+          image: bot服务 镜像地址
+          imagePullPolicy: Always
+          ports:
+            - name: 8080tcp02
+              containerPort: 8080
+              protocol: TCP
+          resources:
+            limits:
+              memory: 1Gi
+            requests:
+              memory: 128Mi
+        - args:
+          - -XX:MetaspaceSize=128m
+          - -XX:MaxMetaspaceSize=128m
+          - -Xms1024m
+          - -Xmx1024m
+          - -Xmn256m
+          - -Xss256k
+          - -XX:SurvivorRatio=8
+          - -XX:+UseConcMarkSweepGC
+          env:
+            - name: JAVA_OPTS
+              value: -XX:MetaspaceSize=128m -XX:MaxMetaspaceSize=512m -Xms512m -Xmx1024m
+                  -Xmn256m -Xss256k -XX:SurvivorRatio=8 -XX:+UseConcMarkSweepGC
+          envFrom:
+            - configMapRef:
+                name: bot-config
+                optional: false
+      dnsPolicy: ClusterFirst
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: bot-svc
+  namespace: dev
+spec:
+  selector:
+    app: bot-svc
+    version: v16
+  ports:
+    - protocol: TCP
+      name: 8080tcp2
+      port: 8080
+      targetPort: 8080
+  sessionAffinity: None
+  type: ClusterIP
+status:
+  loadBalancer: {}
